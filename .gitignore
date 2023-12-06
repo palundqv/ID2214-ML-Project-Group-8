@@ -154,6 +154,8 @@ cython_debug/
 
 # Traning csv file
 traning_with_207_features.csv
+training_data_features.csv
+training_data_fingerprint.csv
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
