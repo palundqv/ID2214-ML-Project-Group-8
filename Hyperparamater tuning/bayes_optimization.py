@@ -11,6 +11,7 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import roc_auc_score
 
+# returns a dict with model names and their ROC-AUC score, change models to test by uncomment the model in the models list. 
 def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
     # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
@@ -18,8 +19,8 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
     # Define a list of models to test
     models = [
         # ("Random Forest", RandomForestClassifier()),
-        ("Support Vector Machine", SVC()), 
-        #  ("K-Nearest Neighbors", KNeighborsClassifier()),
+        # ("Support Vector Machine", SVC()), 
+        ("K-Nearest Neighbors", KNeighborsClassifier()),
         # ("Gaussian Naive Bayes", GaussianNB()),
         #  ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)), # ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (4,) + inhomogeneous part.
     ]
@@ -46,9 +47,12 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
             }
         elif model_name == "K-Nearest Neighbors":
             search_space = {
-                'n_neighbors': (3, 10),
+                'n_neighbors': (3, 20),
                 'weights': ['uniform', 'distance'],
                 'p': [1, 2],
+                'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
+                'leaf_size': (10, 50),
+                'metric': ['euclidean', 'manhattan', 'minkowski'],
             }
         elif model_name == "Multi-layer Perceptron":
             search_space = {

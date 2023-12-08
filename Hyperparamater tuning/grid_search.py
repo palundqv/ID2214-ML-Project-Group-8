@@ -8,6 +8,7 @@ from sklearn.impute import SimpleImputer
 
 import pandas as pd
 
+# returns a dict with models names and their ROC-AUC score, change models to test by uncomment the model in the models list.
 def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
     # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
