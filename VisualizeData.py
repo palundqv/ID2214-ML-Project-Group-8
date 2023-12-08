@@ -28,7 +28,4 @@ if __name__ == "__main__":
     training_data.drop(columns = ["INDEX","SMILES","ACTIVE"], inplace=True)
     training_data, column_filter = dprep.create_column_filter(training_data)
     training_data, imputation = dprep.create_imputation(training_data)
-
-    
-
     pca_plot_2features(training_data)
