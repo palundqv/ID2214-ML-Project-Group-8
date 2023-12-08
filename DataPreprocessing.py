@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import sklearn
 
-
-
 def create_column_filter(dataframe):
     workDF = dataframe.copy()
     columns_to_drop = []
@@ -33,7 +31,6 @@ def create_imputation(dataframe):
                 mean = workDF[columnName].mean()
                 workDF[columnName].fillna(mean,inplace=True)
                 imputation[columnName] =  mean
-
     # object and series
     for columnName in workDF.select_dtypes(include=['object', 'category']).columns:
         if columnName != "SMILES" and columnName != "ACTIVE" and columnName != "INDEX":
@@ -50,7 +47,6 @@ def create_imputation(dataframe):
                 mostCommon = workDF[columnName].mode()[0]
                 workDF[columnName].fillna(mostCommon, inplace=True)
                 imputation[columnName] = mostCommon
-
     return workDF, imputation
 
 
@@ -60,3 +56,4 @@ def apply_imputation(dataframe, imputation):
         if columnName in workDF.columns:
             workDF[columnName].fillna(impVal, inplace=True)
     return workDF
+
