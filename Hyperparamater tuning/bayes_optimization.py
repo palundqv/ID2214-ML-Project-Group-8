@@ -1,17 +1,15 @@
-from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 
 from skopt import BayesSearchCV
 import pandas as pd
 from sklearn.impute import SimpleImputer
+from sklearn.metrics import roc_auc_score
 
 def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
     # Split the dataset into training and testing sets
@@ -20,10 +18,10 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
     # Define a list of models to test
     models = [
         # ("Random Forest", RandomForestClassifier()),
-        # ("Support Vector Machine", SVC()), # Uncomment when SVC is working
-        # ("K-Nearest Neighbors", KNeighborsClassifier()),
+        ("Support Vector Machine", SVC()), 
+        #  ("K-Nearest Neighbors", KNeighborsClassifier()),
         # ("Gaussian Naive Bayes", GaussianNB()),
-         ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
+        #  ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)), # ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (4,) + inhomogeneous part.
     ]
 
     # Results storage
@@ -41,9 +39,10 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
             }
         elif model_name == "Support Vector Machine":
             search_space = {
-                'C': (0.1, 1),
-                'kernel': ['linear', 'rbf'],
-                'gamma': ['scale', 'auto'],
+                'C': (1e-6, 1e+6, 'log-uniform'),  # Regularization parameter
+                'kernel': ['linear', 'rbf', 'poly'],  # Kernel type
+                'gamma': (1e-6, 1e+1, 'log-uniform'),  # Kernel coefficient (only for 'rbf' and 'poly')
+                'degree': (1, 8),  # Degree of the polynomial kernel (only for 'poly')
             }
         elif model_name == "K-Nearest Neighbors":
             search_space = {
@@ -53,17 +52,17 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
             }
         elif model_name == "Multi-layer Perceptron":
             search_space = {
-                'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 50), (10, 10, 10)],
+                'hidden_layer_sizes': [(50,),(100,),(50,50),(100,100)],
                 'activation': ['relu', 'tanh'],
-                 'alpha': (1e-4, 1e-2, 'log-uniform'),
-    }
-
+                'alpha': (1e-6, 1e-2, 'log-uniform'),
+                'learning_rate_init': (1e-4, 1e-1, 'log-uniform'),
+            }
         else:
             print(f"Unsupported model: {model_name}")
             continue
 
         # Bayesian optimization for hyperparameter tuning using training and validation sets
-        opt = BayesSearchCV(model, search_space, n_iter=10, cv=5, n_jobs=-1)
+        opt = BayesSearchCV(model, search_space, n_iter=10, cv=5, n_jobs=-1, scoring='roc_auc', verbose=3)
 
         # looking for bugs
         print(f"{model_name} Search Space: {search_space}")
@@ -75,19 +74,20 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
         best_model = opt.best_estimator_
 
         # Make predictions on the test set
-        y_pred = best_model.predict(X_test)
+        y_scores = best_model.predict_proba(X_test)[:, 1]  # Probability estimates for positive class
 
-        # Evaluate the model on the test set and store accuracy
-        accuracy = accuracy_score(y_test, y_pred)
+        # Calculate ROC-AUC
+        roc_auc = roc_auc_score(y_test, y_scores)
 
         # Print the results
+        print("----------------------------------------------------------------------------------------------------------------------")
         print(f"\n{model_name} Best Parameters: {opt.best_params_}")
-        print(f"{model_name} Accuracy: {accuracy:.4f}")
+        print(f"{model_name} ROC-AUC: {roc_auc:.4f}")
 
         # Store results
         results.append({
             'Model': model_name,
-            'Accuracy': accuracy,
+            'ROC-AUC': roc_auc,
         })
 
     return results
@@ -95,11 +95,21 @@ def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
 if __name__ == "__main__":
     print("Running: find_hyperparameters_bayes_optimization")
 
+   # Load the data
     x = pd.read_csv("training_with_207_features.csv")
     x.drop(columns="SMILES", inplace=True)
+
+    # Impute missing values
     imputer = SimpleImputer(strategy='mean')
     X_imputed = imputer.fit_transform(x)
+
+    # Load labels
     training_data = pd.read_csv("training_smiles.csv")
-    y = training_data["ACTIVE"].astype("category") # .cat.codes
-    # print(pd.DataFrame(X_imputed).head(10).apply(pd.to_numeric()))
-    test_hyperparameter_all_models_bayes_optimization(pd.DataFrame(X_imputed).head(1000), y.head(1000))
+    y = training_data["ACTIVE"].astype("category")
+
+    # Ensure that X_imputed is a DataFrame
+    X_imputed = pd.DataFrame(X_imputed, columns=x.columns)
+
+    # Call the function with the correct data
+    test_hyperparameter_all_models_bayes_optimization(X_imputed.head(1000), y.head(1000))
+    print("Done")
