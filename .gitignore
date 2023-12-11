@@ -159,6 +159,7 @@ training_data_features.csv
 training_data_fingerprint.csv
 training_smiles.csv
 test_smiles.csv
+feature_importances.csv
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
