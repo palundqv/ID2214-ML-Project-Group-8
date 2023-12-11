@@ -1,0 +1,23 @@
+Random Forest x SelectKBest
+5 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200}, 'ROC-AUC': 0.5586991086485185}]]
+10 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 50}, 'ROC-AUC': 0.5717754757889665}]]
+30 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 4, 'min_samples_split': 5, 'n_estimators': 50}, 'ROC-AUC': 0.6357793302818597}]]
+50 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': False, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200}, 'ROC-AUC': 0.6486437003131775}]]
+80 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 200}, 'ROC-AUC': 0.6414936159961455}]]
+100 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 30, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 50}, 'ROC-AUC': 0.6287256082871597}]]
+150 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 4, 'min_samples_split': 2, 'n_estimators': 200}, 'ROC-AUC': 0.5998458202842689}]]
+200 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 50}, 'ROC-AUC': 0.6265670922669236}]]
+
+
+Random forest 50 features balanced dataset 1784 x 1784
+RandomForestClassifier(bootstrap=True, max_depth=40, min_samples_leaf=2,min_samples_split=2,n_estimators=200,class_weight="balanced")
+Confusion Matrix:
+[[1231  553]
+ [ 511 1273]]
+
+
+
+K-nearest gave shit results
+
+
+
