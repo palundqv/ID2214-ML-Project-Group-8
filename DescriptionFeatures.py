@@ -93,6 +93,8 @@ def create_csv_with_fingerprints_and_207Features():
 
 
 if __name__ == "__main__":
+    create_csv_with_207features()
+    create_csv_with_fingerprint_features()
     create_csv_with_fingerprints_and_207Features()
     
 
