@@ -5,14 +5,22 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.impute import SimpleImputer
+import DescriptionFeaturesSelection as dsf
+from imblearn.over_sampling import SMOTE
 
 import pandas as pd
 
 # returns a dict with models names and their ROC-AUC score, change models to test by uncomment the model in the models list.
-def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
+def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3, use_smote=True):
     # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y, random_state=42)
 
+    if use_smote:
+        smote = SMOTE(sampling_strategy='auto', random_state=42)
+        X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+    else:
+        X_train_resampled, y_train_resampled = X_train, y_train
+    
     # Define a list of models to test
     models = [
         ("Random Forest", RandomForestClassifier()),
@@ -62,7 +70,7 @@ def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
         grid_search = GridSearchCV(model, param_grid, cv=5, n_jobs=-1, scoring='roc_auc', verbose=1)
 
         # Train the model on the combined training and validation sets
-        grid_search.fit(X_train, y_train)
+        grid_search.fit(X_train_resampled, y_train_resampled)
 
         # Get the best model from the search
         best_model = grid_search.best_estimator_
@@ -89,12 +97,14 @@ def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
 
 if __name__ == "__main__":
     print("running: test_hyperparameter_all_models_grid_search")
-    x = pd.read_csv("training_with_207_features.csv")
-    x.drop(columns="SMILES", inplace=True)
-    imputer = SimpleImputer(strategy='mean')
-    X_imputed = imputer.fit_transform(x)
-    training_data = pd.read_csv("training_smiles.csv")
-    y = training_data["ACTIVE"].astype("category")
+    x = pd.read_csv('..csvData\\training_merged_fingerprints207.csv')
 
-    test_hyperparameter_all_models_grid_search(pd.DataFrame(X_imputed).head(1000), y.head(1000))
-    print("done")
+    training_data, column_filter = dprep.create_column_filter(x)
+    training_data, imputation = dprep.create_imputation(training_data)
+
+    training = training_data.drop(columns = ["INDEX","ACTIVE"])
+    training_lables = training_data["ACTIVE"]
+
+    n_best_features = dsf.select_n_best_features_selectKBest(training, training_lables, n_features=50)
+
+    test_hyperparameter_all_models_grid_search(training[list(n_best_features.keys())], training_lables)
