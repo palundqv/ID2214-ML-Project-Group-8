@@ -18,7 +18,7 @@ def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
         ("Random Forest", RandomForestClassifier()),
         #("Support Vector Machine", SVC()), # It gets stuck after the first fits? Or is it loading a shit long time. Crashes/ Gustav
         #("K-Nearest Neighbors", KNeighborsClassifier()),
-        #("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
+        ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
     ]
 
     # Results storage
@@ -51,6 +51,8 @@ def test_hyperparameter_all_models_grid_search(X, y, test_size=0.3):
                 'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 50)],
                 'activation': ['relu', 'tanh'],
                 'alpha': [0.0001, 0.001, 0.01],
+                'learning_rate': ['constant','adaptive'],
+                'solver': ['sgd', 'adam'],
             }
         else:
             print(f"Unsupported model: {model_name}")

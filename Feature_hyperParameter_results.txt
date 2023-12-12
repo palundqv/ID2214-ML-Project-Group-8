@@ -1,4 +1,4 @@
-Random Forest x SelectKBest
+Random Forest x SelectKBest unbalanced
 5 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200}, 'ROC-AUC': 0.5586991086485185}]]
 10 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 50}, 'ROC-AUC': 0.5717754757889665}]]
 30 : [[{'Model': 'Random Forest', 'Best Parameters:': {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 4, 'min_samples_split': 5, 'n_estimators': 50}, 'ROC-AUC': 0.6357793302818597}]]
@@ -12,12 +12,43 @@ Random Forest x SelectKBest
 Random forest 50 features balanced dataset 1784 x 1784
 RandomForestClassifier(bootstrap=True, max_depth=40, min_samples_leaf=2,min_samples_split=2,n_estimators=200,class_weight="balanced")
 Confusion Matrix:
-[[1231  553]
- [ 511 1273]]
+[[1236  548]
+ [ 505 1279]]
+AUC-ROC Score: 0.7739985094210622
 
 
+***************************************************************************************************************************************************************************************************
 
 K-nearest gave shit results
 
+***************************************************************************************************************************************************************************************************
 
+MLP-Classifier x SelectKBest Balanced set
+10 : [[{'Model': 'Multi-layer Perceptron', 'Best Parameters:': {'activation': 'relu', 'alpha': 0.01, 'hidden_layer_sizes': (50,)}, 'ROC-AUC': 0.647604963762303}]]
+30 : [[{'Model': 'Multi-layer Perceptron', 'Best Parameters:': {'activation': 'relu', 'alpha': 0.0001, 'hidden_layer_sizes': (100,)}, 'ROC-AUC': 0.7030113212285243}]]
+50 : [[{'Model': 'Multi-layer Perceptron', 'Best Parameters:': {'activation': 'relu', 'alpha': 0.001, 'hidden_layer_sizes': (100,)}, 'ROC-AUC': 0.6787610125628667}]]
+80 : [[{'Model': 'Multi-layer Perceptron', 'Best Parameters:': {'activation': 'relu', 'alpha': 0.0001, 'hidden_layer_sizes': (50,)}, 'ROC-AUC': 0.7063316568893476}]]
+100 : [[{'Model': 'Multi-layer Perceptron', 'Best Parameters:': {'activation': 'relu', 'alpha': 0.001, 'hidden_layer_sizes': (50, 50)}, 'ROC-AUC': 0.6898311232639738}]]
 
+***************************************************************************************************************************************************************************************************
+
+UnderSampled results with and without smote for random forest and MPL. 
+
+New Label Counts:
+ACTIVE
+0.0    1784
+1.0    1784
+Name: count, dtype: int64
+Random-Forest with SMOTE:  0.7580369980293189
+Random-Forest no SMOTE:  0.7580369980293189
+MLP with SMOTE:  0.6778090374831587
+MLP no SMOTE:  0.6809985119346862
+
+***************************************************************************************************************************************************************************************************
+Oversampeled with SMOTE Suspect issue with smote samples creeping into testdata
+
+Random-Forest with SMOTE:  0.9942627764719527
+Random-Forest no SMOTE:  0.7806100091974353
+
+MLP with SMOTE:  0.9874362552099959
+MLP no SMOTE:  0.6031809503619784

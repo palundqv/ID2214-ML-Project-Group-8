@@ -18,9 +18,15 @@ def test_hyperparameter_all_models_random_search(X, y, test_size=0.3):
     # Define a list of models to test
     models = [
         ("Random Forest", RandomForestClassifier()),
+<<<<<<< Updated upstream
         # ("Support Vector Machine", SVC()), # Says it only works with grid search?
         # ("K-Nearest Neighbors", KNeighborsClassifier()),
         # ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
+=======
+        #("Support Vector Machine", SVC()), # Says it only works with grid search?
+        #("K-Nearest Neighbors", KNeighborsClassifier()),
+        ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
+>>>>>>> Stashed changes
     ]
 
     # Results storage
@@ -59,6 +65,7 @@ def test_hyperparameter_all_models_random_search(X, y, test_size=0.3):
                 'activation': ['relu', 'tanh'],
                 'alpha': [0.0001, 0.001, 0.01],
                 'solver': ['lbfgs', 'sgd', 'adam'],
+                'learning_rate': ['constant','adaptive'],
             }
         else:
             print(f"Unsupported model: {model_name}")
