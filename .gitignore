@@ -168,3 +168,4 @@ feature_importances.csv
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 training_with_207_features.csv
+*.csv
