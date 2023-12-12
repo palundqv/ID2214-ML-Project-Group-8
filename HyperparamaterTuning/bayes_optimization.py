@@ -16,7 +16,7 @@ from sklearn.metrics import roc_auc_score
 # returns a dict with model names and their ROC-AUC score, change models to test by uncomment the model in the models list. 
 def test_hyperparameter_all_models_bayes_optimization(X, y, test_size=0.3):
     # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y, random_state=42)
 
     # Define a list of models to test
     models = [

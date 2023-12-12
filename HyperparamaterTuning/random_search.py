@@ -13,13 +13,13 @@ import pandas as pd
 # returns a dict with models names and their ROC-AUC score, change models to test by uncomment the model in the models list.
 def test_hyperparameter_all_models_random_search(X, y, test_size=0.3):
     # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, stratify=y, random_state=42)
 
     # Define a list of models to test
     models = [
-        # ("Random Forest", RandomForestClassifier()),
+        ("Random Forest", RandomForestClassifier()),
         # ("Support Vector Machine", SVC()), # Says it only works with grid search?
-        ("K-Nearest Neighbors", KNeighborsClassifier()),
+        # ("K-Nearest Neighbors", KNeighborsClassifier()),
         # ("Multi-layer Perceptron", MLPClassifier(max_iter=1000)),
     ]
 
@@ -35,7 +35,7 @@ def test_hyperparameter_all_models_random_search(X, y, test_size=0.3):
                 'min_samples_split': [2, 5, 10, 15],
                 'min_samples_leaf': [1, 2, 4, 8],
                 'bootstrap': [True, False],
-                'max_features': ['auto', 'sqrt', 'log2'],
+                'max_features': [None, 'sqrt', 'log2'],
             }
         elif model_name == "Support Vector Machine":
             param_grid = {
@@ -100,4 +100,4 @@ if __name__ == "__main__":
     training_data = pd.read_csv("training_smiles.csv")
     y = training_data["ACTIVE"].astype("category")
 
-    test_hyperparameter_all_models_random_search(pd.DataFrame(X_imputed).head(1000), y.head(1000))
+    test_hyperparameter_all_models_random_search(pd.DataFrame(X_imputed).head(100000), y.head(100000))
