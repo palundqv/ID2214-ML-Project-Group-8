@@ -32,8 +32,8 @@ def test_model_on_folds(X, y, classifier, print_results = False, number_of_folds
 
 def balance_labels_down(dataframe, label_column="ACTIVE"):
     original_counts = dataframe[label_column].value_counts()
-    print("Original Label Counts:")
-    print(original_counts)
+    #print("Original Label Counts:")
+    #print(original_counts)
 
     minority_label = original_counts.idxmin()
     majority_label = original_counts.idxmax()
@@ -41,7 +41,7 @@ def balance_labels_down(dataframe, label_column="ACTIVE"):
     label_difference = original_counts[majority_label] - original_counts[minority_label]
 
     if label_difference == 0:
-        print("Labels are already balanced.")
+        #print("Labels are already balanced.")
         return dataframe
 
     majority_indices = dataframe[dataframe[label_column] == majority_label].index
@@ -50,8 +50,8 @@ def balance_labels_down(dataframe, label_column="ACTIVE"):
     balanced_dataframe = dataframe.drop(indices_to_remove)
 
     new_counts = balanced_dataframe[label_column].value_counts()
-    print("\nNew Label Counts:")
-    print(new_counts)
+    #print("\nNew Label Counts:")
+    #print(new_counts)
     return balanced_dataframe
 
 def new_balance_labels_down(X,y):
@@ -169,10 +169,34 @@ def manual_crossValidation(training, training_lables, number_of_features = 50, u
         'classification_report': class_report
     }
 
-"""
-def test_random_forest_smote():
+
+def test_random_forest_smote(training_data):
     classifier = RandomForestClassifier(bootstrap=True, max_depth=40, min_samples_leaf=2,min_samples_split=2,n_estimators=200,class_weight="balanced",random_state=42)
-"""
+    X = training_data.drop(columns = ["INDEX","ACTIVE"])
+    y = training_data["ACTIVE"]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    smote = SMOTE(sampling_strategy='auto', random_state=42)
+    X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+    n_best_features = dsf.select_n_best_features_selectKBest(X_train_resampled, y_train_resampled, n_features=50)
+
+    classifier.fit(X_train_resampled[list(n_best_features.keys())], y_train_resampled)
+
+    y_pred = classifier.predict(X_test[list(n_best_features.keys())])
+
+    accuracy = accuracy_score(y_test, y_pred)
+    auc_score = roc_auc_score(y_test, classifier.predict_proba(X_test)[:, 1])
+    cm = confusion_matrix(y_test, y_pred)
+
+    print("Accuracy: ",accuracy)
+    print("auc_score: ",auc_score)
+
+
+
+
+
+
 
     
 
@@ -189,24 +213,21 @@ if __name__ == "__main__":
     training = training_data.drop(columns = ["INDEX","ACTIVE"])
     training_lables = training_data["ACTIVE"]
 
-    smote = SMOTE(sampling_strategy='auto', random_state=42)
-    training_resampled, training_lables_resampled = smote.fit_resample(training, training_lables)
+    #smote = SMOTE(sampling_strategy='auto', random_state=42)
+    #training_resampled, training_lables_resampled = smote.fit_resample(training, training_lables)
     
     ## Testing Random forest with and without smote
-    results_oversampled = manual_crossValidation(training_resampled, training_lables_resampled, 50,use_classifier='randomForest',sampling="smote")
+    results_oversampled = manual_crossValidation(training, training_lables, 50,use_classifier='randomForest',sampling="smote")
     results_undersampled = manual_crossValidation(training, training_lables, 50,use_classifier='randomForest',sampling="under")
 
     print("Random-Forest with SMOTE: ", results_oversampled["average_auc_score"])
     print("Random-Forest no SMOTE: ", results_undersampled["average_auc_score"])
 
     ## Testing MLP with and without smote
-    MLP_results_oversampled = manual_crossValidation(training_resampled, training_lables_resampled, 50,use_classifier='MLP', sampling="smote")
+    MLP_results_oversampled = manual_crossValidation(training, training_lables, 50,use_classifier='MLP', sampling="smote")
     MLP_results_undersampled = manual_crossValidation(training, training_lables, 50, use_classifier='MLP',sampling="under")
     print("MLP with SMOTE: ", MLP_results_oversampled["average_auc_score"])
     print("MLP no SMOTE: ", MLP_results_undersampled["average_auc_score"])
-
-
-
 
 
     #test_for_hyperparameters(training, training_lables)
