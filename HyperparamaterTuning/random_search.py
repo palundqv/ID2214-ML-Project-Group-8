@@ -7,8 +7,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
-import DataPreprocessing as dprep
-import DescriptionFeaturesSelection as dsf
+from ..DataPreprocessing import create_column_filter, create_imputation
+from ..DescriptionFeaturesSelection import select_n_best_features_selectKBest as dsf
 from imblearn.over_sampling import SMOTE
 
 import pandas as pd
@@ -104,12 +104,12 @@ if __name__ == "__main__":
     print("running: test_hyperparameter_all_models_random_search")
     x = pd.read_csv('..csvData\\training_merged_fingerprints207.csv')
 
-    training_data, column_filter = dprep.create_column_filter(x)
-    training_data, imputation = dprep.create_imputation(training_data)
+    training_data, column_filter = create_column_filter(x)
+    training_data, imputation = create_imputation(training_data)
 
     training = training_data.drop(columns = ["INDEX","ACTIVE"])
     training_lables = training_data["ACTIVE"]
 
-    n_best_features = dsf.select_n_best_features_selectKBest(training, training_lables, n_features=50)
+    n_best_features = dsf(training, training_lables, n_features=50)
 
     test_hyperparameter_all_models_random_search(training[list(n_best_features.keys())], training_lables)
