@@ -1,0 +1,57 @@
+test_hyperparameter_all_models_random_search(training[list(n_best_features.keys())], training_lables, use_smote=False)
+
+[CV 1/5] END bootstrap=True, max_depth=None, max_features=sqrt, min_samples_leaf=8, min_samples_split=2, n_estimators=10;, score=0.703 total time=  14.3s
+[CV 2/5] END bootstrap=True, max_depth=None, max_features=sqrt, min_samples_leaf=8, min_samples_split=2, n_estimators=10;, score=0.685 total time=  14.6s
+[CV 3/5] END bootstrap=True, max_depth=None, max_features=sqrt, min_samples_leaf=8, min_samples_split=2, n_estimators=10;, score=0.679 total time=  13.4s
+[CV 4/5] END bootstrap=True, max_depth=None, max_features=sqrt, min_samples_leaf=8, min_samples_split=2, n_estimators=10;, score=0.701 total time=  15.1s
+[CV 1/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=5, n_estimators=50;, score=0.784 total time=  32.7s
+[CV 4/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=5, n_estimators=50;, score=0.748 total time=  33.9s
+[CV 3/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=5, n_estimators=50;, score=0.739 total time=  35.1s
+[CV 5/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=5, n_estimators=50;, score=0.747 total time=  35.2s
+[CV 2/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=5, n_estimators=50;, score=0.728 total time=  35.7s
+[CV 1/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=10;, score=0.760 total time=   6.7s
+[CV 5/5] END bootstrap=True, max_depth=None, max_features=sqrt, min_samples_leaf=8, min_samples_split=2, n_estimators=10;, score=0.686 total time=  14.9s
+[CV 2/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=10;, score=0.711 total time=   7.4s
+[CV 3/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=10;, score=0.737 total time=   7.0s
+[CV 5/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=10;, score=0.730 total time=   7.3s
+[CV 4/5] END bootstrap=False, max_depth=10, max_features=log2, min_samples_leaf=1, min_samples_split=10, n_estimators=10;, score=0.732 total time=   8.1s
+[CV 1/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=15, n_estimators=10;, score=0.763 total time=   9.8s
+[CV 2/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=15, n_estimators=10;, score=0.716 total time=  10.4s
+[CV 3/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=15, n_estimators=10;, score=0.730 total time=   9.8s
+[CV 4/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=15, n_estimators=10;, score=0.738 total time=  10.8s
+[CV 5/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=15, n_estimators=10;, score=0.715 total time=  10.3s
+[CV 2/5] END bootstrap=False, max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=300;, score=0.764 total time= 9.2min
+[CV 4/5] END bootstrap=False, max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=300;, score=0.787 total time= 9.2min
+[CV 5/5] END bootstrap=False, max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=300;, score=0.774 total time= 9.2min
+[CV 3/5] END bootstrap=False, max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=300;, score=0.773 total time= 9.3min
+
+[CV 1/5] END bootstrap=False, max_depth=20, max_features=sqrt, min_samples_leaf=1, min_samples_split=10, n_estimators=300;, score=0.806 total time= 9.4min
+
+[CV 1/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300;, score=0.780 total time= 4.9min
+[CV 2/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300;, score=0.727 total time= 5.1min
+[CV 3/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300;, score=0.745 total time= 5.1min
+[CV 4/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300;, score=0.750 total time= 4.9min
+[CV 5/5] END bootstrap=False, max_depth=10, max_features=sqrt, min_samples_leaf=1, min_samples_split=2, n_estimators=300;, score=0.751 total time= 5.0min
+[CV 1/5] END bootstrap=False, max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=15, n_estimators=200;, score=0.785 total time= 5.2min
+[CV 2/5] END bootstrap=False, max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=15, n_estimators=200;, score=0.768 total time= 4.9min
+[CV 3/5] END bootstrap=False, max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=15, n_estimators=200;, score=0.785 total time= 5.1min
+[CV 4/5] END bootstrap=False, max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=15, n_estimators=200;, score=0.792 total time= 5.0min
+[CV 5/5] END bootstrap=False, max_depth=30, max_features=log2, min_samples_leaf=2, min_samples_split=15, n_estimators=200;, score=0.766 total time= 5.0min
+[CV 1/5] END bootstrap=True, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50;, score=0.762 total time=  39.7s
+[CV 2/5] END bootstrap=True, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50;, score=0.717 total time=  43.0s
+[CV 3/5] END bootstrap=True, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50;, score=0.749 total time=  41.3s
+[CV 4/5] END bootstrap=True, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50;, score=0.745 total time=  42.9s
+[CV 5/5] END bootstrap=True, max_depth=10, max_features=sqrt, min_samples_leaf=4, min_samples_split=2, n_estimators=50;, score=0.749 total time=  43.3s
+[CV 1/5] END bootstrap=False, max_depth=None, max_features=None, min_samples_leaf=4, min_samples_split=2, n_estimators=300;, score=0.575 total time=82.3min
+[CV 1/5] END bootstrap=False, max_depth=30, max_features=None, min_samples_leaf=1, min_samples_split=15, n_estimators=300;, score=0.598 total time=85.0min
+[CV 3/5] END bootstrap=False, max_depth=30, max_features=None, min_samples_leaf=1, min_samples_split=15, n_estimators=300;, score=0.567 total time=85.7min
+[CV 2/5] END bootstrap=False, max_depth=30, max_features=None, min_samples_leaf=1, min_samples_split=15, n_estimators=300;, score=0.573 total time=86.1min
+[CV 2/5] END bootstrap=False, max_depth=None, max_features=None, min_samples_leaf=4, min_samples_split=2, n_estimators=300;, score=0.555 total time=84.7min
+[CV 4/5] END bootstrap=False, max_depth=30, max_features=None, min_samples_leaf=1, min_samples_split=15, n_estimators=300;, score=0.532 total time=87.4min
+[CV 5/5] END bootstrap=False, max_depth=30, max_features=None, min_samples_leaf=1, min_samples_split=15, n_estimators=300;, score=0.565 total time=88.6min
+[CV 4/5] END bootstrap=False, max_depth=None, max_features=None, min_samples_leaf=4, min_samples_split=2, n_estimators=300;, score=0.585 total time=81.5min
+[CV 3/5] END bootstrap=False, max_depth=None, max_features=None, min_samples_leaf=4, min_samples_split=2, n_estimators=300;, score=0.574 total time=81.8min
+[CV 5/5] END bootstrap=False, max_depth=None, max_features=None, min_samples_leaf=4, min_samples_split=2, n_estimators=300;, score=0.579 total time=87.5min
+----------------------------------------------------------------------------------------------------------------------
+Random Forest Best Parameters: {'n_estimators': 300, 'min_samples_split': 10, 'min_samples_leaf': 1, 'max_features': 'sqrt', 'max_depth': 20, 'bootstrap': False}    
+Random Forest ROC-AUC: 0.7886

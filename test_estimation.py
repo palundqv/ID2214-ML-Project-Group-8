@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 
-import pandas as pd
-
 def write_predictions_to_txt(auc_estimate, predicted_probabilities, output_file_path='output.txt'):
     # Create a DataFrame with the AUC estimate and predicted probabilities
     data = {'Probability': [auc_estimate] + predicted_probabilities}
